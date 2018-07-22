@@ -15,6 +15,19 @@ def simple_reply(msg):
         return '爱你too'
     elif '哈哈哈哈哈' in msg.text:
         return '哈'*130
+    elif ':task' in msg.text:
+        with open('task.txt',mode='a',encoding='utf-8') as f:
+            f.write(msg.text.replace(':task','')+'\n')
+        return "Task saved"
+    elif ':gettask' in msg.text:
+        response = None
+        with open('task.txt', mode='r+') as f:
+            response = f.readlines()
+        response_text = ''
+        for i in range(len(response)):
+            response_text = response_text + str(i) + '. '+response[i] + '\n'
+        print(response_text)
+        return response_text
     pass
 itchat.auto_login(hotReload=True, enableCmdQR=2)
 itchat.run()
